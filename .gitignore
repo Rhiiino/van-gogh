@@ -5,3 +5,7 @@
 *-backups/
 *.lck
 ~*
+
+# GIF export scratch frames
+media/gifs/.*-frames/
+media/gifs/.*-frames-labeled/
