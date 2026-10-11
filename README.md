@@ -12,7 +12,7 @@ It is the right barrel of **Panzer**, a printed dual-barrel turret: two of these
 
 ## Interactive model
 
-An interactive model of the barrel — orbit, explode, and inspect each part — coming soon :)
+An interactive model of the barrel — orbit, explode, and inspect each part — is at [van-gogh.themidhunraj.com](https://van-gogh.themidhunraj.com/).
 
 ## Features + Core components
 
