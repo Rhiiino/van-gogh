@@ -4,7 +4,7 @@
 
 Van Gogh is a flywheel barrel that runs as its own machine. Twin wheels take rounds from a spring magazine through a disc indexer (DIAL), one at a time. A single 6S inlet powers the whole unit. On the barrel middle, the barrel control unit (BCU) — the logic board and its printed case — listens for wireless commands on an ESP32-S3 Mini.
 
-It is the right barrel of **Panzer**, a printed dual-barrel turret: two of these barrels on a turntable that pans and tilts them together. This repository is that barrel by itself. You can power it, assemble it, and run it on the bench with nothing else from the turret attached.
+It is the right barrel of **Panzer**, a printed dual-barrel turret: two of these barrels on a turntable that pans and tilts them together. Van Gogh is Panzer's first barrel variant, and this repository is the second iteration, **MK II**. You can power it, assemble it, and run it on the bench with nothing else from the turret attached.
 
 ## Exploded view
 
