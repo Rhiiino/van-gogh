@@ -2,19 +2,17 @@
 
 Bought parts for **one** barrel. Printed parts are excluded. Quantities: [bom.md](bom.md).
 
-**Total: $187.94**
+**Total: $140.84**
 
-Each line is this barrel’s share of the listing: pack price × quantity on the barrel ÷ pieces in the pack. Rows marked **est.** use a live listing price from 2026-10-10 because the bill of materials names the part without a price. Tax and shipping are omitted. The logic-board line is the amount paid for order Y14-2705430A, split across the five boards.
-
-The Micro-Fit kit, the JST-PH header kit, and the JST-PH pigtail kit are charged in full ($49.97). How many extra pieces are in each bag is not recorded. Scaling those three lines to the pieces on this barrel puts the total nearer **$143**.
+Each line is this barrel’s share of the listing: pack price × quantity on the barrel ÷ pieces in the pack. Rows marked **est.** use a pack listing from 2026-10-10. Tax and shipping are omitted. The logic-board line is the amount paid for order Y14-2705430A, split across the five boards.
 
 | Group | This barrel |
 | --- | ---: |
 | Mechanical | $79.02 |
 | Fasteners | $3.50 |
-| Connectors | $50.97 |
+| Connectors | $3.87 |
 | Logic board | $54.45 |
-| **Total** | **$187.94** |
+| **Total** | **$140.84** |
 
 Flywheel motors, the two ESCs, and the Pololu 6 V buck are $95.95 of the total.
 
@@ -47,10 +45,12 @@ The motor 4-pack and the ESC 4-pack each cover two barrels. This table takes hal
 
 | Part | Qty | Listing | This barrel |
 | --- | ---: | ---: | ---: |
-| Micro-Fit 3.0 1×6 pair | 1 | $21.99 kit | $21.99 |
-| JST-PH 2.0 pigtails, 24 AWG | 5 | $16.99 kit | $16.99 |
-| JST-PH 2.0 right-angle headers | 5 | $10.99 kit | $10.99 |
+| Micro-Fit 3.0 1×6 pair | 1 | $21.99 / 60 housings | $0.73 |
+| JST-PH 2.0 pigtails, 24 AWG | 5 | $16.99 / 120 wires | $1.56 |
+| JST-PH 2.0 right-angle headers | 5 | $10.99 / 95 | $0.58 |
 | XT90 male | 1 | $9.99 / 5 pair est. | $1.00 |
+
+The Micro-Fit kit is 60 housings (30 male, 30 female), including two 1×6 of each gender. This barrel uses one pair, counted as 2 housings. The PH header kit is 95 right-angle headers; this barrel uses five (four 2-pin, one 3-pin). The pigtail kit includes 120 pre-crimped wires; this barrel uses 11 of them, two per 2-pin lead and three for the LED stick.
 
 ## Logic board
 
@@ -74,21 +74,3 @@ Refs: [board.md](board.md).
 | SS34 flyback diode | 1 | $8.99 / 300 est. | $0.03 |
 
 The PCB order was five boards: merchandise $4.00, shipping $7.01, tax $0.77, paid $11.78. One board is $2.36. The ESP32 4-pack covers this barrel plus three other boards. One machined-header strip of each gender covers the ESP32-S3 Mini and the MP1584. One square-header strip covers the Pololu socket and the DRV8833 socket.
-
-## Estimates
-
-These rows have no recorded price on the bill of materials.
-
-- **N20.** Brand is DWEII. $9.99 is a typical 4-pack of their 3–6 V metal-gear motors.
-- **LED stick.** $5.95 is an 8-pixel WS2812B stick. The plan is about 12 pixels.
-- **Laser.** HiLetgo 5 V 650 nm, 10-pack at $6.79.
-- **Solenoid.** MEETOOT SM0537, 2-pack at $7.99.
-- **Magnets.** Hardware on hand is 5.8 × 1.8 mm. The stand-in is a 6 × 2 mm 100-pack at $8.99.
-- **Heat-set inserts.** A 130-piece M3 kit at $9.99. The selected kit’s own price is unrecorded.
-- **M3 bolts.** No listing. About $0.60 out of a small assortment.
-- **Square headers.** No listing. One 40-pin strip from a 10-pack at $8.63.
-- **XT90 male.** One plug from a 5-pair Amass pack at $9.99.
-- **ESP32-S3 Mini.** 4-pack at $18.99.
-- **MP1584EN.** 6-pack at $9.65.
-- **IRLR024N.** 10-pack at $6.99.
-- **SS34.** One diode from a 300-piece SMA kit at $8.99.
