@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Van Gogh — component test</title>
+  <style>
+    :root {
+      --bg: #14110d;
+      --panel: #1e1a15;
+      --ink: #f4efe6;
+      --muted: #b3a48f;
+      --line: rgba(228, 196, 150, 0.22);
+      --gold: #e4b15a;
+      --gold-dim: rgba(228, 177, 90, 0.14);
+      --ok: #9dce86;
+      --danger: #e15a45;
+      --danger-ink: #2a0d09;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(900px 420px at 10% -10%, rgba(228, 177, 90, 0.16), transparent 55%),
+        var(--bg);
+    }
+    main {
+      width: min(920px, calc(100% - 28px));
+      margin: 0 auto 56px;
+    }
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 18px 0 14px;
+      background: var(--bg);
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--gold);
+      letter-spacing: 0.22em;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+    h1 { margin: 0; font-size: 1.7rem; font-weight: 650; letter-spacing: -0.02em; }
+    .sub { margin: 8px 0 0; color: var(--muted); max-width: 46rem; line-height: 1.45; }
+    .live {
+      margin-top: 8px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--ok);
+    }
+    .live.off { color: var(--danger); }
+    .estop {
+      min-width: 132px;
+      min-height: 64px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--danger);
+      color: white;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+    }
+    .banner {
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--gold);
+      background: var(--gold-dim);
+      font-size: 0.85rem;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .kicker {
+      margin: 0 0 4px;
+      color: var(--gold);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+    h2 { margin: 0 0 6px; font-size: 1.05rem; }
+    .note { margin: 0 0 12px; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+    .state {
+      margin: 10px 0 0;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.78rem;
+      color: #d9ccb8;
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    @media (max-width: 720px) {
+      .grid2, .top { grid-template-columns: 1fr; }
+      .top { flex-direction: column; }
+      .estop { width: 100%; }
+    }
+    label span {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #14110d;
+      color: var(--ink);
+      padding: 8px 10px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #14110d;
+      color: var(--ink);
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 650;
+    }
+    button.primary { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+    button.warn { border-color: var(--danger); color: #ffb1a6; }
+    button.on { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+    @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      max-width: min(520px, calc(100% - 24px));
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #2a241c;
+      border: 1px solid var(--gold);
+      color: var(--ink);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div>
+      <p class="banner" id="banner" hidden>Browser preview. This file shows the page only. Flash the sketch to drive a barrel.</p>
+      <p class="eyebrow">VAN GOGH</p>
+      <h1>Component test</h1>
+      <p class="sub">One control for each load on the barrel. Nothing runs until you ask it to. E-stop parks every output.</p>
+      <div class="live" id="live">Connecting…</div>
+    </div>
+    <button class="estop" id="estop" type="button">E-STOP</button>
+  </div>
+
+  <section class="panel">
+    <p class="kicker">FLYWHEELS</p>
+    <h2>Two speed controllers</h2>
+    <p class="note">GPIO1 is flywheel 1 (Molex pin 5). GPIO2 is flywheel 2 (Molex pin 6). Arm at idle, then pick a throttle. The cap limits that command. 100% means the cap, not full stick. Coast eases a PWM signal down over one second, then that wheel disarms. DShot stops at once. Arm again before the next run. Clamp the barrel before either wheel turns.</p>
+    <div class="fields">
+      <label><span>SIGNAL</span>
+        <select id="fwProto">
+          <option value="pwm">50 Hz PWM</option>
+          <option value="dshot150">DShot150</option>
+          <option value="dshot300">DShot300</option>
+          <option value="dshot600">DShot600</option>
+        </select>
+      </label>
+      <label><span>THROTTLE CAP %</span><input id="fwCap" type="number" min="1" max="100" value="40"></label>
+      <label><span>RUN MS</span><input id="fwRun" type="number" min="50" max="60000" value="3000"></label>
+      <label><span>STOP</span>
+        <select id="fwStop">
+          <option value="coast">Coast</option>
+          <option value="cut">Cut now</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <button class="primary" id="fwApply" type="button">Apply signal and cap</button>
+    </div>
+    <div class="split">
+      <div>
+        <h2>Flywheel 1</h2>
+        <div class="row" id="fw1Pct">
+          <button type="button" data-p="0">0%</button>
+          <button type="button" data-p="20">20%</button>
+          <button type="button" data-p="40">40%</button>
+          <button type="button" data-p="60">60%</button>
+          <button type="button" data-p="80">80%</button>
+          <button type="button" data-p="100">100%</button>
+        </div>
+        <div class="row">
+          <button class="primary" id="fw1Arm" type="button">Arm</button>
+          <button id="fw1Stop" type="button">Stop</button>
+        </div>
+        <p class="state" id="fw1State">—</p>
+      </div>
+      <div>
+        <h2>Flywheel 2</h2>
+        <div class="row" id="fw2Pct">
+          <button type="button" data-p="0">0%</button>
+          <button type="button" data-p="20">20%</button>
+          <button type="button" data-p="40">40%</button>
+          <button type="button" data-p="60">60%</button>
+          <button type="button" data-p="80">80%</button>
+          <button type="button" data-p="100">100%</button>
+        </div>
+        <div class="row">
+          <button class="primary" id="fw2Arm" type="button">Arm</button>
+          <button id="fw2Stop" type="button">Stop</button>
+        </div>
+        <p class="state" id="fw2State">—</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel">
+      <p class="kicker">INDEXER</p>
+      <h2>DIAL</h2>
+      <p class="note">GPIO4 and GPIO5 drive the drum motor on J2. Any run is full 6 V for the time you set. Reverse the direction if the drum turns the wrong way. Coast releases the motor. Brake holds it.</p>
+      <div class="fields">
+        <label><span>DIRECTION</span>
+          <select id="dialDir">
+            <option value="forward">Forward</option>
+            <option value="reverse">Reverse</option>
+          </select>
+        </label>
+        <label><span>RUN MS</span><input id="dialRun" type="number" min="50" max="60000" value="1500"></label>
+        <label><span>THEN</span>
+          <select id="dialStop">
+            <option value="coast">Coast</option>
+            <option value="brake">Brake</option>
+          </select>
+        </label>
+      </div>
+      <div class="row">
+        <button class="primary" id="dialGo" type="button">Run</button>
+        <button id="dialHalt" type="button">Stop</button>
+      </div>
+      <p class="state" id="dialState">—</p>
+    </section>
+
+    <section class="panel">
+      <p class="kicker">MUZZLE</p>
+      <h2>Cone</h2>
+      <p class="note">GPIO6 and GPIO7 drive the cone motor on J3. Same full-voltage run as the indexer. A turning cone is the ready cue.</p>
+      <div class="fields">
+        <label><span>DIRECTION</span>
+          <select id="coneDir">
+            <option value="forward">Forward</option>
+            <option value="reverse">Reverse</option>
+          </select>
+        </label>
+        <label><span>RUN MS</span><input id="coneRun" type="number" min="50" max="60000" value="1500"></label>
+        <label><span>THEN</span>
+          <select id="coneStop">
+            <option value="coast">Coast</option>
+            <option value="brake">Brake</option>
+          </select>
+        </label>
+      </div>
+      <div class="row">
+        <button class="primary" id="coneGo" type="button">Run</button>
+        <button id="coneHalt" type="button">Stop</button>
+      </div>
+      <p class="state" id="coneState">—</p>
+    </section>
+  </div>
+
+  <div class="grid2">
+    <section class="panel">
+      <p class="kicker">LASENOID</p>
+      <h2>Laser</h2>
+      <p class="note">GPIO8 switches the laser on J5. Do not look into the beam or aim it at anyone. Pulse turns it off by itself. Stay on holds until Laser off or E-stop.</p>
+      <label><span>PULSE MS</span><input id="laserMs" type="number" min="50" max="60000" value="500"></label>
+      <div class="row">
+        <button class="primary" id="laserPulse" type="button">Pulse</button>
+        <button id="laserHold" type="button">Stay on</button>
+        <button id="laserOff" type="button">Laser off</button>
+      </div>
+      <p class="state" id="laserState">—</p>
+    </section>
+
+    <section class="panel">
+      <p class="kicker">LASENOID</p>
+      <h2>Solenoid</h2>
+      <p class="note">GPIO9 pulses the solenoid on J6. It always turns off by itself. The longest pulse is 8 seconds. E-stop ends one early.</p>
+      <label><span>PULSE MS</span><input id="solMs" type="number" min="50" max="8000" value="300"></label>
+      <div class="row">
+        <button class="warn" id="solFire" type="button">Pulse solenoid</button>
+      </div>
+      <p class="state" id="solState">—</p>
+    </section>
+  </div>
+
+  <section class="panel">
+    <p class="kicker">BARREL MIDDLE</p>
+    <h2>LED stick</h2>
+    <p class="note">GPIO10 is the data line on J4. The stick on this barrel is 12 pixels. Light one pixel to walk the chain. A dark tail means the data stops at the last lit pixel.</p>
+    <div class="fields">
+      <label><span>PIXELS</span><input id="ledCount" type="number" min="1" max="64" value="12"></label>
+      <label><span>BRIGHTNESS %</span><input id="ledBright" type="number" min="0" max="100" value="40"></label>
+      <label><span>COLOR</span><input id="ledColor" type="color" value="#e4b15a"></label>
+      <label><span>ONE PIXEL #</span><input id="ledPixel" type="number" min="0" max="63" value="0"></label>
+    </div>
+    <div class="row">
+      <button class="primary" id="ledSolid" type="button">Fill</button>
+      <button id="ledOne" type="button">One pixel</button>
+      <button id="ledChase" type="button">Chase</button>
+      <button id="ledOff" type="button">Off</button>
+    </div>
+    <p class="state" id="ledState">—</p>
+  </section>
+</main>
+<p class="toast" id="toast" hidden></p>
+<script>
+const preview = location.protocol === "file:";
+const banner = document.getElementById("banner");
+if (preview) banner.hidden = false;
+
+function toast(text) {
+  const el = document.getElementById("toast");
+  el.textContent = text;
+  el.hidden = false;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { el.hidden = true; }, 2400);
+}
+
+function num(id) { return Number(document.getElementById(id).value); }
+function val(id) { return document.getElementById(id).value; }
+
+function rgb() {
+  const hex = val("ledColor").replace("#", "");
+  return {
+    r: parseInt(hex.slice(0, 2), 16) || 0,
+    g: parseInt(hex.slice(2, 4), 16) || 0,
+    b: parseInt(hex.slice(4, 6), 16) || 0
+  };
+}
+
+async function post(path, body) {
+  if (preview) {
+    toast("Preview only. Flash the sketch to drive hardware.");
+    return;
+  }
+  const response = await fetch(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json();
+  if (!data.ok) throw new Error(data.error || "request failed");
+  return data;
+}
+
+document.getElementById("estop").onclick = () => post("/api/estop", {}).catch((e) => toast(e.message));
+
+document.getElementById("fwApply").onclick = () => post("/api/flywheel/settings", {
+  protocol: val("fwProto"),
+  capPercent: num("fwCap")
+}).catch((e) => toast(e.message));
+
+function markRow(row, button) {
+  row.querySelectorAll("button").forEach((item) => item.classList.toggle("on", item === button));
+}
+
+function bindThrottle(rowId, motor) {
+  const row = document.getElementById(rowId);
+  row.onclick = async (event) => {
+    const button = event.target.closest("button[data-p]");
+    if (!button) return;
+    markRow(row, button);
+    try {
+      await post("/api/flywheel/throttle", {
+        motor,
+        percent: Number(button.dataset.p),
+        runMs: num("fwRun"),
+        stop: val("fwStop"),
+        capPercent: num("fwCap")
+      });
+    } catch (e) {
+      toast(e.message);
+    }
+  };
+}
+bindThrottle("fw1Pct", 1);
+bindThrottle("fw2Pct", 2);
+
+document.getElementById("fw1Arm").onclick = () => post("/api/flywheel/arm", { motor: 1 }).catch((e) => toast(e.message));
+document.getElementById("fw2Arm").onclick = () => post("/api/flywheel/arm", { motor: 2 }).catch((e) => toast(e.message));
+document.getElementById("fw1Stop").onclick = () => post("/api/flywheel/stop", { motor: 1, stop: val("fwStop") }).catch((e) => toast(e.message));
+document.getElementById("fw2Stop").onclick = () => post("/api/flywheel/stop", { motor: 2, stop: val("fwStop") }).catch((e) => toast(e.message));
+
+function bindMotor(goId, haltId, path, dirId, runId, stopId) {
+  document.getElementById(goId).onclick = () => post(path + "/run", {
+    direction: val(dirId),
+    runMs: num(runId),
+    stop: val(stopId)
+  }).catch((e) => toast(e.message));
+  document.getElementById(haltId).onclick = () => post(path + "/stop", {
+    stop: val(stopId)
+  }).catch((e) => toast(e.message));
+}
+bindMotor("dialGo", "dialHalt", "/api/dial", "dialDir", "dialRun", "dialStop");
+bindMotor("coneGo", "coneHalt", "/api/cone", "coneDir", "coneRun", "coneStop");
+
+document.getElementById("laserPulse").onclick = () => {
+  const pulseMs = Math.max(50, num("laserMs") || 50);
+  post("/api/laser", { on: true, pulseMs }).catch((e) => toast(e.message));
+};
+document.getElementById("laserHold").onclick = () => post("/api/laser", { on: true, pulseMs: 0 }).catch((e) => toast(e.message));
+document.getElementById("laserOff").onclick = () => post("/api/laser", { on: false }).catch((e) => toast(e.message));
+document.getElementById("solFire").onclick = () => post("/api/solenoid", { pulseMs: num("solMs") }).catch((e) => toast(e.message));
+
+function ledBody(mode) {
+  return Object.assign({ mode, count: num("ledCount"), brightness: num("ledBright"), pixel: num("ledPixel") }, rgb());
+}
+document.getElementById("ledSolid").onclick = () => post("/api/leds", ledBody("solid")).catch((e) => toast(e.message));
+document.getElementById("ledOne").onclick = () => post("/api/leds", ledBody("one")).catch((e) => toast(e.message));
+document.getElementById("ledChase").onclick = () => post("/api/leds", ledBody("chase")).catch((e) => toast(e.message));
+document.getElementById("ledOff").onclick = () => post("/api/leds", ledBody("off")).catch((e) => toast(e.message));
+
+function wheelLine(motor) {
+  if (!motor) return "—";
+  const motion = motor.coasting ? "coasting" : (motor.percent > 0 ? motor.percent + "%" : "idle");
+  return (motor.armed ? "armed" : "disarmed") + " · " + motion;
+}
+
+function render(status) {
+  const live = document.getElementById("live");
+  if (!status || !status.ok) {
+    live.textContent = "Offline";
+    live.classList.add("off");
+    return;
+  }
+  live.classList.remove("off");
+  live.textContent = status.ip === "preview"
+    ? "Browser preview — not connected to a barrel"
+    : status.hostname + " @ " + status.ip + (status.ssid ? " (" + status.ssid + ")" : "");
+  const motors = (status.flywheels && status.flywheels.motors) || [];
+  document.getElementById("fw1State").textContent = wheelLine(motors[0]);
+  document.getElementById("fw2State").textContent = wheelLine(motors[1]);
+  const dial = status.dial || {};
+  const cone = status.cone || {};
+  document.getElementById("dialState").textContent = dial.running
+    ? "running " + (dial.forward ? "forward" : "reverse")
+    : "idle";
+  document.getElementById("coneState").textContent = cone.running
+    ? "running " + (cone.forward ? "forward" : "reverse")
+    : "idle";
+  document.getElementById("laserState").textContent = status.laser && status.laser.on ? "on" : "off";
+  document.getElementById("solState").textContent = status.solenoid && status.solenoid.on ? "pulsing" : "off";
+  const leds = status.leds || {};
+  document.getElementById("ledState").textContent =
+    (leds.mode || "off") + " · " + (leds.count || 0) + " px · " + (leds.brightness || 0) + "%";
+}
+
+const sample = {
+  ok: true,
+  hostname: "van-gogh",
+  ip: "preview",
+  ssid: "",
+  flywheels: {
+    protocol: "pwm",
+    capPercent: 40,
+    motors: [
+      { id: 1, gpio: 1, armed: false, percent: 0, coasting: false },
+      { id: 2, gpio: 2, armed: false, percent: 0, coasting: false }
+    ]
+  },
+  dial: { running: false, forward: true },
+  cone: { running: false, forward: true },
+  laser: { on: false },
+  solenoid: { on: false },
+  leds: { mode: "off", count: 12, brightness: 40 }
+};
+
+async function poll() {
+  if (preview) {
+    render(sample);
+    return;
+  }
+  try {
+    const response = await fetch("/api/status");
+    render(await response.json());
+  } catch (e) {
+    render(null);
+  }
+}
+poll();
+setInterval(poll, 1000);
+</script>
+</body>
+</html>

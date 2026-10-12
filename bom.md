@@ -17,16 +17,16 @@ One row is one printed part. Qty is per barrel. **Specifications** is material a
 | ammo guide                 | 1   | 100% infill, PETG |
 | barrel base L panel        | 1   | 100% infill, PETG |
 | barrel base R panel        | 1   | 100% infill, PETG |
-| barrel middle              | 1   |                   |
+| barrel middle              | 1   | 100% infill, PETG |
 | BCU cover                  | 1   |                   |
 | cone                       | 1   | 100% infill, PETG |
-| drum cam                   | 1   |                   |
-| drum main                  | 1   |                   |
+| drum cam                   | 1   | 0.08mm quality, 100% infill, PETG |
+| drum main                  | 1   | 0.08mm quality, 100% infill, PETG |
 | drum motor shaft           | 1   | 100% infill, PETG |
 | ESC casing                 | 2   | 100% infill, PETG |
 | flywheel                   | 2   |                   |
-| flywheel base              | 1   |                   |
-| flywheel carriage          | 1   |                   |
+| flywheel base              | 1   | 100% infill, PETG |
+| flywheel carriage          | 1   | 100% infill, PETG |
 | lasenoid base              | 1   |                   |
 | laser carriage             | 1   |                   |
 | led & cone n20 motor panel | 1   |                   |

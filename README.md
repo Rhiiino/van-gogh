@@ -66,7 +66,7 @@ The **PH ceiling / PYE connector** plate closes the power housing. Its hex socke
 
 ## Status
 
-This repository documents one right barrel: the mechanical design, assembly guide, bill of materials, logic-board pin reference, and KiCad project. Printable meshes will be added in [models/](models/). The logic PCB was ordered as JLCPCB **Y14-2705430A** (2-layer, 56 × 92.6 mm, 1.6 mm, 1 oz, black). Sources and Gerbers: [kicad/](kicad/).
+This repository documents one right barrel: the mechanical design, assembly guide, bill of materials, logic-board pin reference, and KiCad project. Printable meshes are in [models/](models/). The logic PCB was ordered as JLCPCB **Y14-2705430A** (2-layer, 56 × 92.6 mm, 1.6 mm, 1 oz, black). Sources and Gerbers: [kicad/](kicad/).
 
 ## Documentation
 
@@ -81,7 +81,7 @@ This repository documents one right barrel: the mechanical design, assembly guid
 | [board.md](board.md)                     | Logic board — every reference and pin                                                            |
 | [kicad/](kicad/)                         | KiCad project and `gerber.zip` for fabrication                                                   |
 | [models/](models/)                       | 3D model files for the printed parts                                                             |
-| [firmware/README.md](firmware/README.md) | Barrel control firmware for the ESP32-S3 Mini                                                    |
+| [firmware/README.md](firmware/README.md) | Component-test firmware for the ESP32-S3 Mini — flash steps and the control page |
 | [LICENSE](LICENSE)                       | Creative Commons Attribution-NonCommercial 4.0                                                   |
 
 
