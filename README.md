@@ -8,7 +8,7 @@ It is the right barrel of **Panzer**, a printed dual-barrel turret: two of these
 
 ## Exploded view
 
-![Exploded view](media/gifs/explode-loop-centered-label.gif)
+![Exploded view](media/gifs/explode-loop-centered-label-round.gif)
 
 ## Interactive model
 

@@ -19,6 +19,7 @@ Photos and renders for the landing page. The printed-parts catalog is [catalog.m
 | --- | --- |
 | `explode-assembled-to-open.gif` | Barrel explode, assembled to exploded and back |
 | `explode-loop-centered-label.gif` | Centered explode with label |
+| `explode-loop-centered-label-round.gif` | Same loop, Rival round left of the label |
 | `explode-loop-end.gif` | Same loop from the indexer end |
 | `explode-dial-label.gif` | DIAL explode with label |
 | `explode-dial-framed-label.gif` | DIAL explode, open pose framed |
